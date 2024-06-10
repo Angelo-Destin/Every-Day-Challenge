@@ -18,10 +18,11 @@ body{
     margin:0 ;
     height:100vh;
     overflow:hidden;
-    background-color: #f6f7fb;
+    background-color: rgb(135, 196, 211);
 }
 .container{
     text-align: center;
+
 }
 
 .progress-container {
