@@ -1,29 +1,50 @@
-let step = document.querySelectorAll('.step');
-let line = document.querySelectorAll('hr');
-let btn1 = document.querySelector('.btn1');
-let btn2 = document.querySelector('.btn2');
-let currentStep = 0;
+const progress = document.getElementById('progress');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const circles = document.querySelectorAll('.circle');
 
-btn2.addEventListener('click', () => {
-    if (currentStep < step.length) {
-        step[currentStep].classList.add('active');
-        if (currentStep > 0) {
-            line[currentStep - 1].classList.add('active');
-        }
-        currentStep++;
-    }
-    btn2.classList.add('active');
-    btn1.classList.remove('active');
-});
+let currentActive = 1;
 
-btn1.addEventListener('click', () => {
-    if (currentStep > 0) {
-        currentStep--;
-        step[currentStep].classList.remove('active');
-        if (currentStep > 0) {
-            line[currentStep - 1].classList.remove('active');
-        }
+next.addEventListener('click', () => {
+    currentActive++
+
+    if (currentActive > circles.length) {
+        currentActive = circles.length;
     }
-    btn1.classList.add('active');
-    btn2.classList.remove('active');
-});
+    
+    update() 
+})
+
+prev.addEventListener('click', () => {
+    currentActive--
+
+    if (currentActive < 1) {
+        currentActive = 1;
+    }
+    
+    update()
+})
+
+function update() {
+    circles.forEach((circle, idx) =>{
+            if (idx < currentActive) {
+                circle.classList.add('active')
+            }else{
+                 circle.classList.remove('active')
+            } 
+    })
+
+    const actives = document.querySelectorAll('.active')
+
+    progress.style.width =  (actives.length -1) / (circles.length -1) *100 +'%'
+
+
+if(currentActive=== 1){
+    prev.disabled = true;
+}else if(currentActive === circles.length){
+    next.disabled = true;
+}else{
+    prev.disabled = false;
+    next.disabled = false
+    }
+}
